@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pigs/screens/cage1/cage1.dart';
 import 'package:pigs/screens/cage2/cage2.dart';
-import 'package:pigs/screens/tanks.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -44,20 +43,6 @@ class Home extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)))),
           ),
-          Container(
-            margin: const EdgeInsets.all(45),
-            child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => tanks()));
-                },
-                child: const Text('TANKS', style: TextStyle(fontSize: 35)),
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.pink,
-                    fixedSize: const Size(300, 100),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50)))),
-          )
         ],
       ),
     );

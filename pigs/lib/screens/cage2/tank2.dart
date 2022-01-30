@@ -6,12 +6,12 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-class tanks extends StatefulWidget {
+class tanks2 extends StatefulWidget {
   @override
-  _tanksState createState() => _tanksState();
+  _tanks2State createState() => _tanks2State();
 }
 
-class _tanksState extends State<tanks> {
+class _tanks2State extends State<tanks2> {
   final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
   double water_percent = 0.0;
   int water_level = 0;
@@ -44,7 +44,7 @@ class _tanksState extends State<tanks> {
   void _tank2() {
     final StreamSubscription<DatabaseEvent> _testRef = FirebaseDatabase.instance
         .ref()
-        .child("tanks/feed_tank")
+        .child("cage_2/feed_tank")
         .onValue
         .listen((event) {
       final int description = jsonDecode(jsonEncode(event.snapshot.value));
