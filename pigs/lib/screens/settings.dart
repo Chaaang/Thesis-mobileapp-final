@@ -70,9 +70,28 @@ class _SettingsPageState extends State<SettingsPage> {
                 style: TextStyle(fontSize: 35),
               ),
               onPressed: () {
-                weight(temp);
-                weight2(temp2);
-                allset(context);
+                if (temp == null && temp2 == null) {
+                  notset(context);
+                } else if (temp == null) {
+                  weight2(temp2);
+                  allset(context);
+                } else if (temp2 == null) {
+                  weight(temp);
+                  allset(context);
+                } else {
+                  weight(temp);
+                  weight2(temp2);
+                  allset(context);
+                }
+                // if (temp == null) {
+                //   weight2(temp2);
+                //   allset(context);
+                // } else if (temp2 == null) {
+                //   weight(temp);
+                //   allset(context);
+                // } else if (temp == null && temp2 == null) {
+                //   notset(context);
+                // }
               },
               style: ElevatedButton.styleFrom(
                   primary: Colors.pink,
@@ -106,6 +125,17 @@ class _SettingsPageState extends State<SettingsPage> {
   void allset(BuildContext context) {
     var alertDialog = const AlertDialog(
         title: Text("DONE"), content: Text("You may feed your pigs!"));
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alertDialog;
+        });
+  }
+
+  void notset(BuildContext context) {
+    var alertDialog = const AlertDialog(
+        title: Text("ALERT"), content: Text("Please SET atleast 1 cage"));
 
     showDialog(
         context: context,
