@@ -30,7 +30,7 @@ class _tanksState extends State<tanks> {
   void _tank1() {
     final StreamSubscription<DatabaseEvent> _testRef = FirebaseDatabase.instance
         .ref()
-        .child("cage_1/water_tank1")
+        .child("tanks/water_tank")
         .onValue
         .listen((event) {
       final int description = jsonDecode(jsonEncode(event.snapshot.value));
@@ -44,7 +44,7 @@ class _tanksState extends State<tanks> {
   void _tank2() {
     final StreamSubscription<DatabaseEvent> _testRef = FirebaseDatabase.instance
         .ref()
-        .child("cage_1/feed_tank1")
+        .child("tanks/feed_tank")
         .onValue
         .listen((event) {
       final int description = jsonDecode(jsonEncode(event.snapshot.value));
@@ -78,7 +78,10 @@ class _tanksState extends State<tanks> {
               progressColor: Colors.blue,
               backgroundColor: Colors.blue.shade100,
               circularStrokeCap: CircularStrokeCap.round,
-              center: Text(water_level.toString() + "%"),
+              center: Text(
+                water_level.toString() + "%",
+                style: TextStyle(fontSize: 20),
+              ),
             ),
           ),
           const SizedBox(height: 50),
@@ -104,18 +107,6 @@ class _tanksState extends State<tanks> {
           const SizedBox(
             height: 30,
           ),
-          // ElevatedButton(
-          //   child: const Text(
-          //     "SCHEDULE",
-          //     style: TextStyle(fontSize: 40),
-          //   ),
-          //   onPressed: () {},
-          //   style: ElevatedButton.styleFrom(
-          //       primary: Colors.pink,
-          //       fixedSize: const Size(300, 100),
-          //       shape: RoundedRectangleBorder(
-          //           borderRadius: BorderRadius.circular(50))),
-          // ),
         ],
       ),
     );
