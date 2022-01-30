@@ -44,7 +44,7 @@ class _tanks2State extends State<tanks2> {
   void _tank2() {
     final StreamSubscription<DatabaseEvent> _testRef = FirebaseDatabase.instance
         .ref()
-        .child("cage_2/feed_tank")
+        .child("cage_2/feed_tank_2")
         .onValue
         .listen((event) {
       final int description = jsonDecode(jsonEncode(event.snapshot.value));
