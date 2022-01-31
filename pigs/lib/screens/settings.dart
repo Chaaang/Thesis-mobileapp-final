@@ -83,15 +83,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   weight2(temp2);
                   allset(context);
                 }
-                // if (temp == null) {
-                //   weight2(temp2);
-                //   allset(context);
-                // } else if (temp2 == null) {
-                //   weight(temp);
-                //   allset(context);
-                // } else if (temp == null && temp2 == null) {
-                //   notset(context);
-                // }
               },
               style: ElevatedButton.styleFrom(
                   primary: Colors.pink,
