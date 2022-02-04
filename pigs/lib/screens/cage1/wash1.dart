@@ -42,13 +42,13 @@ class _Washing1State extends State<Washing1> {
             onChanged: (value) => setState(() {
               selected = value;
               if (selected == true) {
-                wash("ON");
+                wash(true);
               } else {
-                wash("OFF");
+                wash(false);
               }
             }),
           )));
-  wash(var x) {
+  wash(bool x) {
     DatabaseReference _testRef =
         FirebaseDatabase.instance.ref("/cage_1").child("/wash_1");
     _testRef.set(x);

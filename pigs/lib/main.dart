@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pigs/screens/home.dart';
-import 'package:pigs/screens/schedule.dart';
+import 'package:pigs/screens/schedules.dart';
 import 'package:pigs/screens/settings.dart';
 import 'image_banner.dart';
 
@@ -46,7 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
               onSelected: (item) => onSelected(context, item),
               itemBuilder: (context) => [
                     const PopupMenuItem<int>(value: 0, child: Text("Settings")),
-                    const PopupMenuItem<int>(value: 1, child: Text("Schedule")),
                     const PopupMenuItem<int>(
                         value: 2, child: Text("Contact Us")),
                   ])
@@ -68,9 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => SettingsPage()));
         break;
-      case 1:
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Schedule()));
     }
   }
 }

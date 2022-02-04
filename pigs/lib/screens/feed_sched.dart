@@ -1,17 +1,13 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:pigs/screens/viewsched.dart';
 
-class Schedule extends StatefulWidget {
-  const Schedule({Key? key}) : super(key: key);
-
+class FeedSchedule extends StatefulWidget {
   @override
-  _ScheduleState createState() => _ScheduleState();
+  _FeedScheduleState createState() => _FeedScheduleState();
 }
 
-class _ScheduleState extends State<Schedule> {
+class _FeedScheduleState extends State<FeedSchedule> {
   TimeOfDay timeOfDay = const TimeOfDay(hour: 1, minute: 11);
   String time_temp = "";
   bool isCheck = false;
@@ -34,9 +30,16 @@ class _ScheduleState extends State<Schedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("SCHEDULE"),
-        centerTitle: true,
-      ),
+          title: const Text("FEED SCHEDULE"),
+          centerTitle: true,
+          actions: [
+            PopupMenuButton<int>(
+                onSelected: (item) => onSelected(context, item),
+                itemBuilder: (context) => [
+                      const PopupMenuItem<int>(
+                          value: 0, child: Text("View Sched")),
+                    ])
+          ]),
       body: Center(
         child: Column(
           children: [
@@ -51,8 +54,6 @@ class _ScheduleState extends State<Schedule> {
             ElevatedButton(
                 onPressed: () {
                   time();
-                  // holder++;
-                  // print(holder);
                 },
                 style: ElevatedButton.styleFrom(
                     primary: Colors.pink,
@@ -72,9 +73,13 @@ class _ScheduleState extends State<Schedule> {
                   child: Checkbox(
                       value: isCheck,
                       onChanged: (value) {
-                        setState(() {
-                          isCheck = value!;
-                        });
+                        if (cage1_id == 3) {
+                          null;
+                        } else {
+                          setState(() {
+                            isCheck = value!;
+                          });
+                        }
                       }),
                 ),
                 const SizedBox(
@@ -97,9 +102,13 @@ class _ScheduleState extends State<Schedule> {
                   child: Checkbox(
                       value: isCheck2,
                       onChanged: (value) {
-                        setState(() {
-                          isCheck2 = value!;
-                        });
+                        if (cage2_id == 3) {
+                          null;
+                        } else {
+                          setState(() {
+                            isCheck2 = value!;
+                          });
+                        }
                       }),
                 ),
                 const SizedBox(
@@ -128,6 +137,10 @@ class _ScheduleState extends State<Schedule> {
                     sched2(time_temp);
                     cage2_id++;
                   }
+                  setState(() {
+                    isCheck = false;
+                    isCheck2 = false;
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                     primary: Colors.pink,
@@ -142,13 +155,24 @@ class _ScheduleState extends State<Schedule> {
   }
 
   sched1(String cage1) {
-    DatabaseReference _testRef = FirebaseDatabase.instance.ref("/cage1_sched");
+    DatabaseReference _testRef =
+        FirebaseDatabase.instance.ref("/cage1_feed_sched");
 
     _testRef.update({cage1_id.toString(): cage1});
   }
 
   sched2(String cage2) {
-    DatabaseReference _testRef = FirebaseDatabase.instance.ref("/cage2_sched");
+    DatabaseReference _testRef =
+        FirebaseDatabase.instance.ref("/cage2_feed_sched");
     _testRef.update({cage2_id.toString(): cage2});
+  }
+
+  void onSelected(BuildContext context, int item) {
+    switch (item) {
+      case 0:
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ViewSched()));
+        break;
+    }
   }
 }
