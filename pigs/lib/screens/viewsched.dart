@@ -102,20 +102,27 @@ class _ViewSchedState extends State<ViewSched> {
           title: const Text("Schedule"),
         ),
         body: Column(children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextButton(
-              onPressed: () {
-                for (int i = 0; i < 4; i++) {
-                  getfeed(i.toString());
-                }
-                for (int i = 0; i < 4; i++) {
-                  getwash(i.toString());
-                }
-              },
-              child: Text("CAGE1")),
-          SizedBox(
+            onPressed: () {
+              for (int i = 0; i < 4; i++) {
+                getfeed(i.toString());
+              }
+              for (int i = 0; i < 4; i++) {
+                getwash(i.toString());
+              }
+            },
+            child: const Text(
+              "CAGE1",
+              style: TextStyle(fontSize: 40, color: Colors.white),
+            ),
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.blue,
+            ),
+          ),
+          const SizedBox(
             height: 20,
           ),
           Padding(
@@ -130,20 +137,27 @@ class _ViewSchedState extends State<ViewSched> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextButton(
-              onPressed: () {
-                for (int i = 0; i < 4; i++) {
-                  getfeed2(i.toString());
-                }
-                for (int i = 0; i < 4; i++) {
-                  getwash2(i.toString());
-                }
-              },
-              child: Text("CAGE2")),
-          SizedBox(
+            onPressed: () {
+              for (int i = 0; i < 4; i++) {
+                getfeed2(i.toString());
+              }
+              for (int i = 0; i < 4; i++) {
+                getwash2(i.toString());
+              }
+            },
+            child: const Text(
+              "CAGE2",
+              style: TextStyle(fontSize: 40, color: Colors.white),
+            ),
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.blue,
+            ),
+          ),
+          const SizedBox(
             height: 20,
           ),
           Padding(
