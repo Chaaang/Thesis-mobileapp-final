@@ -12,8 +12,8 @@ class _FeedScheduleState extends State<FeedSchedule> {
   String time_temp = "";
   bool isCheck = false;
   bool isCheck2 = false;
-  int cage1_id = 0;
-  int cage2_id = 0;
+  int cage1_id = 1;
+  int cage2_id = 1;
 
   void time() {
     showTimePicker(context: context, initialTime: TimeOfDay.now())
@@ -73,7 +73,7 @@ class _FeedScheduleState extends State<FeedSchedule> {
                   child: Checkbox(
                       value: isCheck,
                       onChanged: (value) {
-                        if (cage1_id == 3) {
+                        if (cage1_id == 4) {
                           null;
                         } else {
                           setState(() {
@@ -102,7 +102,7 @@ class _FeedScheduleState extends State<FeedSchedule> {
                   child: Checkbox(
                       value: isCheck2,
                       onChanged: (value) {
-                        if (cage2_id == 3) {
+                        if (cage2_id == 4) {
                           null;
                         } else {
                           setState(() {
