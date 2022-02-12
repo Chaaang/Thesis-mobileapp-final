@@ -12,6 +12,7 @@ class Washing2 extends StatefulWidget {
 
 class _Washing2State extends State<Washing2> {
   bool selected = false;
+  String option = "";
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,15 @@ class _Washing2State extends State<Washing2> {
           RotatedBox(
             quarterTurns: 1,
             child: buildSpecialAndroidSwitch(),
-          )
+          ),
+          SizedBox(height: 150),
+          ElevatedButton(
+              onPressed: null,
+              child: Text(option),
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.pink,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50)))),
         ],
       )),
     );
@@ -43,8 +52,10 @@ class _Washing2State extends State<Washing2> {
               selected = value;
               if (selected == true) {
                 wash(true);
+                option = "ON";
               } else {
                 wash(false);
+                option = "OFF";
               }
             }),
           )));

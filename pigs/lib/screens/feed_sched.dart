@@ -21,7 +21,6 @@ class _FeedScheduleState extends State<FeedSchedule> {
               setState(() {
                 timeOfDay = value!;
                 time_temp = timeOfDay.format(context).toString();
-                print(time_temp);
               })
             });
   }

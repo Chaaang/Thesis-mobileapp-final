@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +10,6 @@ class ViewSched extends StatefulWidget {
 }
 
 class _ViewSchedState extends State<ViewSched> {
-  @override
   List<String> temp = [];
   List<String> wash = [];
 
@@ -30,6 +28,7 @@ class _ViewSchedState extends State<ViewSched> {
   String w11 = "";
   String w22 = "";
   String w33 = "";
+  List<String> holder = [];
 
   getfeed(String x) {
     final _testRef = FirebaseDatabase.instance
@@ -37,15 +36,21 @@ class _ViewSchedState extends State<ViewSched> {
         .once()
         .then((event) {
       temp.add(jsonDecode(jsonEncode(event.snapshot.value)));
-      // print(temp);
+      print(temp[1]);
       setState(() {
         f1 = temp[0];
         f2 = temp[1];
         f3 = temp[2];
-        //  print(f1);
       });
     });
   }
+  /*
+ if (f1 == " ") {
+          DatabaseReference _testRef =
+              FirebaseDatabase.instance.ref("cage1_feed_sched/");
+          _testRef.update({"1": f2});
+        }
+  */
 
   getfeed2(String x) {
     final _testRef = FirebaseDatabase.instance
@@ -53,7 +58,6 @@ class _ViewSchedState extends State<ViewSched> {
         .once()
         .then((event) {
       temp2.add(jsonDecode(jsonEncode(event.snapshot.value)));
-
       setState(() {
         f11 = temp2[0];
         f22 = temp2[1];
@@ -68,12 +72,10 @@ class _ViewSchedState extends State<ViewSched> {
         .once()
         .then((event) {
       wash.add(jsonDecode(jsonEncode(event.snapshot.value)));
-      //  print(wash);
       setState(() {
         w1 = wash[0];
         w2 = wash[1];
         w3 = wash[2];
-        //   print(w1);
       });
     });
   }
@@ -107,10 +109,10 @@ class _ViewSchedState extends State<ViewSched> {
           ),
           TextButton(
             onPressed: () {
-              for (int i = 0; i < 4; i++) {
+              for (int i = 1; i <= 3; i++) {
                 getfeed(i.toString());
               }
-              for (int i = 0; i < 4; i++) {
+              for (int i = 1; i <= 3; i++) {
                 getwash(i.toString());
               }
             },
@@ -142,10 +144,10 @@ class _ViewSchedState extends State<ViewSched> {
           ),
           TextButton(
             onPressed: () {
-              for (int i = 0; i < 4; i++) {
+              for (int i = 1; i <= 3; i++) {
                 getfeed2(i.toString());
               }
-              for (int i = 0; i < 4; i++) {
+              for (int i = 1; i <= 3; i++) {
                 getwash2(i.toString());
               }
             },
@@ -182,7 +184,7 @@ class _ViewSchedState extends State<ViewSched> {
                 child: Center(
                     child: Text(
                   cell,
-                  style: TextStyle(fontSize: 25),
+                  style: const TextStyle(fontSize: 25),
                 )),
               ))
           .toList());

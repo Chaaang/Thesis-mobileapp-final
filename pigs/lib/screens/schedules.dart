@@ -12,24 +12,6 @@ class Schedule extends StatefulWidget {
 }
 
 class _ScheduleState extends State<Schedule> {
-  TimeOfDay timeOfDay = const TimeOfDay(hour: 1, minute: 11);
-  String time_temp = "";
-  bool isCheck = false;
-  bool isCheck2 = false;
-  int cage1_id = 0;
-  int cage2_id = 0;
-
-  void time() {
-    showTimePicker(context: context, initialTime: TimeOfDay.now())
-        .then((value) => {
-              setState(() {
-                timeOfDay = value!;
-                time_temp = timeOfDay.format(context).toString();
-                print(time_temp);
-              })
-            });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

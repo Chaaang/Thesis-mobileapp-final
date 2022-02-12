@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pigs/screens/home.dart';
-import 'package:pigs/screens/schedules.dart';
 import 'package:pigs/screens/settings.dart';
 import 'image_banner.dart';
 
