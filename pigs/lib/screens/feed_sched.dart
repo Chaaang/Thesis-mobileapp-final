@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:pigs/screens/viewsched.dart';
@@ -129,17 +131,25 @@ class _FeedScheduleState extends State<FeedSchedule> {
                     sched2(time_temp);
                     cage1_id++;
                     cage2_id++;
+                    setState(() {
+                      isCheck = false;
+                      isCheck2 = false;
+                    });
                   } else if (isCheck == true && isCheck2 == false) {
                     sched1(time_temp);
                     cage1_id++;
-                  } else if (isCheck2 == true && isCheck == false) {
+                    setState(() {
+                      isCheck = false;
+                    });
+                  } else if (isCheck == false && isCheck2 == true) {
                     sched2(time_temp);
                     cage2_id++;
+                    setState(() {
+                      isCheck2 = false;
+                    });
+                  } else if (isCheck == false && isCheck2 == false) {
+                    print("Please choose cage");
                   }
-                  setState(() {
-                    isCheck = false;
-                    isCheck2 = false;
-                  });
                 },
                 style: ElevatedButton.styleFrom(
                     primary: Colors.pink,

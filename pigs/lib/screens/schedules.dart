@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
+
 import 'package:pigs/screens/feed_sched.dart';
-import 'package:pigs/screens/viewsched.dart';
+
 import 'package:pigs/screens/wash_sched.dart';
 
 class Schedule extends StatefulWidget {
