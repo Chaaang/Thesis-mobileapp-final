@@ -16,6 +16,8 @@ class _FeedScheduleState extends State<FeedSchedule> {
   bool isCheck2 = false;
   int cage1_id = 1;
   int cage2_id = 1;
+  List<String> cageTime1 = [];
+  int key = 1;
 
   void time() {
     showTimePicker(context: context, initialTime: TimeOfDay.now())
@@ -25,6 +27,41 @@ class _FeedScheduleState extends State<FeedSchedule> {
                 time_temp = timeOfDay.format(context).toString();
               })
             });
+  }
+
+  getTime_C1(String x) {
+    final _testRef = FirebaseDatabase.instance
+        .ref("cage1_feed_sched/" + x)
+        .once()
+        .then((event) {
+      cageTime1.add(jsonDecode(jsonEncode(event.snapshot.value)));
+      cageTime1.sort((a, b) => parseTime(a).compareTo(parseTime(b)));
+      //print(cageTime1);
+    });
+  }
+
+  int parseTime(String time) {
+    var components = time.split(RegExp('[: ]'));
+    if (components.length != 3) {
+      throw FormatException('Time not in the expected format: $time');
+    }
+    var hours = int.parse(components[0]);
+    var minutes = int.parse(components[1]);
+    var period = components[2].toUpperCase();
+
+    if (hours < 1 || hours > 12 || minutes < 0 || minutes > 59) {
+      throw FormatException('Time not in the expected format: $time');
+    }
+
+    if (hours == 12) {
+      hours = 0;
+    }
+
+    if (period == 'PM') {
+      hours += 12;
+    }
+
+    return hours * 100 + minutes;
   }
 
   @override
@@ -148,7 +185,18 @@ class _FeedScheduleState extends State<FeedSchedule> {
                       isCheck2 = false;
                     });
                   } else if (isCheck == false && isCheck2 == false) {
-                    print("Please choose cage");
+                    empty(context);
+                  }
+                  if (cage1_id == 3) {
+                    for (int i = 0; i <= 3; i++) {
+                      getTime_C1(i.toString());
+                    }
+                  }
+                  if (cage1_id == 4) {
+                    for (int i = 0; i <= 3; i++) {
+                      postUpdated_C1(cageTime1[i]);
+                      key++;
+                    }
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -161,6 +209,24 @@ class _FeedScheduleState extends State<FeedSchedule> {
         ),
       ),
     );
+  }
+
+  postUpdated_C1(String time) {
+    DatabaseReference _testRef =
+        FirebaseDatabase.instance.ref("/cage1_feed_sched");
+
+    _testRef.update({key.toString(): time});
+  }
+
+  void empty(BuildContext context) {
+    var alertDialog = const AlertDialog(
+        title: Text("ALERT"), content: Text("Please SET TIME and choose CAGE"));
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alertDialog;
+        });
   }
 
   sched1(String cage1) {
