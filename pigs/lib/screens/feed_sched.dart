@@ -17,6 +17,7 @@ class _FeedScheduleState extends State<FeedSchedule> {
   int cage1_id = 1;
   int cage2_id = 1;
   List<String> cageTime1 = [];
+  List<String> cageTime2 = [];
   int key = 1;
 
   void time() {
@@ -36,6 +37,17 @@ class _FeedScheduleState extends State<FeedSchedule> {
         .then((event) {
       cageTime1.add(jsonDecode(jsonEncode(event.snapshot.value)));
       cageTime1.sort((a, b) => parseTime(a).compareTo(parseTime(b)));
+      //print(cageTime1);
+    });
+  }
+
+  getTime_C2(String x) {
+    final _testRef = FirebaseDatabase.instance
+        .ref("cage2_feed_sched/" + x)
+        .once()
+        .then((event) {
+      cageTime2.add(jsonDecode(jsonEncode(event.snapshot.value)));
+      cageTime2.sort((a, b) => parseTime(a).compareTo(parseTime(b)));
       //print(cageTime1);
     });
   }
@@ -190,11 +202,14 @@ class _FeedScheduleState extends State<FeedSchedule> {
                   if (cage1_id == 3) {
                     for (int i = 0; i <= 3; i++) {
                       getTime_C1(i.toString());
+                      getTime_C2(i.toString());
                     }
                   }
                   if (cage1_id == 4) {
                     for (int i = 0; i <= 3; i++) {
                       postUpdated_C1(cageTime1[i]);
+                      postUpdated_C2(cageTime2[i]);
+
                       key++;
                     }
                   }
@@ -214,6 +229,13 @@ class _FeedScheduleState extends State<FeedSchedule> {
   postUpdated_C1(String time) {
     DatabaseReference _testRef =
         FirebaseDatabase.instance.ref("/cage1_feed_sched");
+
+    _testRef.update({key.toString(): time});
+  }
+
+  postUpdated_C2(String time) {
+    DatabaseReference _testRef =
+        FirebaseDatabase.instance.ref("/cage2_feed_sched");
 
     _testRef.update({key.toString(): time});
   }
