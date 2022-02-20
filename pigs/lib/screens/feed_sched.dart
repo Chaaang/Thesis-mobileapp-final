@@ -30,19 +30,18 @@ class _FeedScheduleState extends State<FeedSchedule> {
             });
   }
 
-  getTime_C1(String x) {
-    final _testRef = FirebaseDatabase.instance
+  Future<void> getTime_C1(String x) async {
+    await FirebaseDatabase.instance
         .ref("cage1_feed_sched/" + x)
         .once()
         .then((event) {
       cageTime1.add(jsonDecode(jsonEncode(event.snapshot.value)));
       cageTime1.sort((a, b) => parseTime(a).compareTo(parseTime(b)));
-      //print(cageTime1);
     });
   }
 
-  getTime_C2(String x) {
-    final _testRef = FirebaseDatabase.instance
+  Future<void> getTime_C2(String x) async {
+    await FirebaseDatabase.instance
         .ref("cage2_feed_sched/" + x)
         .once()
         .then((event) {
@@ -174,7 +173,7 @@ class _FeedScheduleState extends State<FeedSchedule> {
               height: 50,
             ),
             ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (isCheck == true && isCheck2 == true) {
                     sched1(time_temp);
                     sched2(time_temp);
@@ -199,18 +198,18 @@ class _FeedScheduleState extends State<FeedSchedule> {
                   } else if (isCheck == false && isCheck2 == false) {
                     empty(context);
                   }
-                  if (cage1_id == 3) {
-                    for (int i = 0; i <= 3; i++) {
-                      getTime_C1(i.toString());
-                      getTime_C2(i.toString());
-                    }
-                  }
-                  if (cage1_id == 4) {
-                    for (int i = 0; i <= 3; i++) {
-                      postUpdated_C1(cageTime1[i]);
-                      postUpdated_C2(cageTime2[i]);
 
-                      key++;
+                  if (cage1_id == 4) {
+                    for (int i = 1; i <= 3; i++) {
+                      await getTime_C1(i.toString());
+                      await getTime_C2(i.toString());
+                      if (i == 3) {
+                        for (int i = 0; i <= 3; i++) {
+                          await postUpdated_C1(cageTime1[i]);
+                          await postUpdated_C2(cageTime2[i]);
+                          key++;
+                        }
+                      }
                     }
                   }
                 },
@@ -226,18 +225,18 @@ class _FeedScheduleState extends State<FeedSchedule> {
     );
   }
 
-  postUpdated_C1(String time) {
+  Future<void> postUpdated_C1(String time) async {
     DatabaseReference _testRef =
         FirebaseDatabase.instance.ref("/cage1_feed_sched");
 
-    _testRef.update({key.toString(): time});
+    await _testRef.update({key.toString(): time});
   }
 
-  postUpdated_C2(String time) {
+  Future<void> postUpdated_C2(String time) async {
     DatabaseReference _testRef =
         FirebaseDatabase.instance.ref("/cage2_feed_sched");
 
-    _testRef.update({key.toString(): time});
+    await _testRef.update({key.toString(): time});
   }
 
   void empty(BuildContext context) {
