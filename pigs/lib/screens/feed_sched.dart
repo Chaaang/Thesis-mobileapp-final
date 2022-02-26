@@ -14,11 +14,12 @@ class _FeedScheduleState extends State<FeedSchedule> {
   String time_temp = "";
   bool isCheck = false;
   bool isCheck2 = false;
-  int cage1_id = 1;
-  int cage2_id = 1;
+  int cage1_id = 0;
+  int cage2_id = 0;
   List<String> cageTime1 = [];
   List<String> cageTime2 = [];
-  int key = 1;
+  int cage1_key = 0;
+  int cage2_key = 0;
 
   void time() {
     showTimePicker(context: context, initialTime: TimeOfDay.now())
@@ -47,7 +48,6 @@ class _FeedScheduleState extends State<FeedSchedule> {
         .then((event) {
       cageTime2.add(jsonDecode(jsonEncode(event.snapshot.value)));
       cageTime2.sort((a, b) => parseTime(a).compareTo(parseTime(b)));
-      //print(cageTime1);
     });
   }
 
@@ -122,7 +122,7 @@ class _FeedScheduleState extends State<FeedSchedule> {
                   child: Checkbox(
                       value: isCheck,
                       onChanged: (value) {
-                        if (cage1_id == 4) {
+                        if (cage1_id >= 3) {
                           null;
                         } else {
                           setState(() {
@@ -151,7 +151,7 @@ class _FeedScheduleState extends State<FeedSchedule> {
                   child: Checkbox(
                       value: isCheck2,
                       onChanged: (value) {
-                        if (cage2_id == 4) {
+                        if (cage2_id >= 3) {
                           null;
                         } else {
                           setState(() {
@@ -199,18 +199,45 @@ class _FeedScheduleState extends State<FeedSchedule> {
                     empty(context);
                   }
 
-                  if (cage1_id == 4) {
-                    for (int i = 1; i <= 3; i++) {
+                  if (cage1_id == 3 && cage2_id == 3) {
+                    for (int i = 0; i <= 2; i++) {
                       await getTime_C1(i.toString());
                       await getTime_C2(i.toString());
-                      if (i == 3) {
-                        for (int i = 0; i <= 3; i++) {
+                      if (i == 2) {
+                        for (int i = 0; i <= 2; i++) {
                           await postUpdated_C1(cageTime1[i]);
                           await postUpdated_C2(cageTime2[i]);
-                          key++;
+                          cage1_key++;
+                          cage2_key++;
                         }
                       }
                     }
+                    cage1_id++;
+                    cage2_id++;
+                  } else if (cage1_id == 3) {
+                    for (int i = 0; i <= 2; i++) {
+                      await getTime_C1(i.toString());
+
+                      if (i == 2) {
+                        for (int i = 0; i <= 2; i++) {
+                          await postUpdated_C1(cageTime1[i]);
+                          cage1_key++;
+                        }
+                      }
+                    }
+                    cage1_id++;
+                  } else if (cage2_id == 3) {
+                    for (int i = 0; i <= 2; i++) {
+                      await getTime_C2(i.toString());
+
+                      if (i == 2) {
+                        for (int i = 0; i <= 2; i++) {
+                          await postUpdated_C2(cageTime2[i]);
+                          cage2_key++;
+                        }
+                      }
+                    }
+                    cage2_id++;
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -229,14 +256,14 @@ class _FeedScheduleState extends State<FeedSchedule> {
     DatabaseReference _testRef =
         FirebaseDatabase.instance.ref("/cage1_feed_sched");
 
-    await _testRef.update({key.toString(): time});
+    await _testRef.update({cage1_key.toString(): time});
   }
 
   Future<void> postUpdated_C2(String time) async {
     DatabaseReference _testRef =
         FirebaseDatabase.instance.ref("/cage2_feed_sched");
 
-    await _testRef.update({key.toString(): time});
+    await _testRef.update({cage2_key.toString(): time});
   }
 
   void empty(BuildContext context) {

@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:firebase_database/firebase_database.dart';
+
 import 'package:flutter/material.dart';
 
 class ViewSched extends StatefulWidget {
@@ -10,182 +12,111 @@ class ViewSched extends StatefulWidget {
 }
 
 class _ViewSchedState extends State<ViewSched> {
-  List<String> temp = [];
-  List<String> wash = [];
-
-  String f1 = "";
-  String f2 = "";
-  String f3 = "";
-  String w1 = "";
-  String w2 = "";
-  String w3 = "";
-
-  List<String> temp2 = [];
-  List<String> wash2 = [];
-  String f11 = "";
-  String f22 = "";
-  String f33 = "";
-  String w11 = "";
-  String w22 = "";
-  String w33 = "";
-  List<String> holder = [];
-
-  getfeed(String x) {
-    final _testRef = FirebaseDatabase.instance
-        .ref("cage1_feed_sched/" + x)
-        .once()
-        .then((event) {
-      temp.add(jsonDecode(jsonEncode(event.snapshot.value)));
-      print(temp[1]);
-      setState(() {
-        f1 = temp[0];
-        f2 = temp[1];
-        f3 = temp[2];
-      });
-    });
-  }
-  /*
- if (f1 == " ") {
-          DatabaseReference _testRef =
-              FirebaseDatabase.instance.ref("cage1_feed_sched/");
-          _testRef.update({"1": f2});
-        }
-  */
-
-  getfeed2(String x) {
-    final _testRef = FirebaseDatabase.instance
-        .ref("cage2_feed_sched/" + x)
-        .once()
-        .then((event) {
-      temp2.add(jsonDecode(jsonEncode(event.snapshot.value)));
-      setState(() {
-        f11 = temp2[0];
-        f22 = temp2[1];
-        f33 = temp2[2];
-      });
-    });
-  }
-
-  getwash(String x) {
-    final _testRef = FirebaseDatabase.instance
-        .ref("cage1_wash_sched/" + x)
-        .once()
-        .then((event) {
-      wash.add(jsonDecode(jsonEncode(event.snapshot.value)));
-      setState(() {
-        w1 = wash[0];
-        w2 = wash[1];
-        w3 = wash[2];
-      });
-    });
-  }
-
-  getwash2(String x) {
-    final _testRef = FirebaseDatabase.instance
-        .ref("cage2_wash_sched/" + x)
-        .once()
-        .then((event) {
-      wash2.add(jsonDecode(jsonEncode(event.snapshot.value)));
-      //  print(wash);
-      setState(() {
-        w11 = wash2[0];
-        w22 = wash2[1];
-        w33 = wash2[2];
-        //   print(w1);
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text("Schedule"),
-        ),
-        body: Column(children: [
-          const SizedBox(
-            height: 20,
-          ),
-          TextButton(
-            onPressed: () {
-              for (int i = 1; i <= 3; i++) {
-                getfeed(i.toString());
-              }
-              for (int i = 1; i <= 3; i++) {
-                getwash(i.toString());
-              }
-            },
-            child: const Text(
-              "CAGE1",
-              style: TextStyle(fontSize: 40, color: Colors.white),
+    return FutureBuilder(
+      future: getData(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        } else if (snapshot.hasData) {
+          final data = snapshot.data as List<List<String>>;
+          return DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              appBar: AppBar(
+                title: const Text('Scheds'),
+                centerTitle: true,
+                bottom: const TabBar(
+                  tabs: [
+                    Tab(
+                      text: 'CAGE 1',
+                    ),
+                    Tab(
+                      text: 'CAGE 2',
+                    ),
+                  ],
+                ),
+              ),
+              body: TabBarView(children: [
+                Center(
+                    child: ListView(
+                  children: [
+                    const Center(child: Text("FEED")),
+                    TextButton(onPressed: () {}, child: Text(data[0][0])),
+                    TextButton(onPressed: () {}, child: Text(data[0][1])),
+                    TextButton(onPressed: () {}, child: Text(data[0][2])),
+                    const Center(child: Text("WASH")),
+                    TextButton(onPressed: () {}, child: Text(data[2][0])),
+                    TextButton(onPressed: () {}, child: Text(data[2][1])),
+                    TextButton(onPressed: () {}, child: Text(data[2][2])),
+                  ],
+                )),
+                Center(
+                  child: Text("CAGE 2"),
+                )
+              ]),
             ),
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.blue,
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Table(
-              border: TableBorder.all(),
-              children: [
-                buildRow(['FEED', 'WASH']),
-                buildRow([f1, w1]),
-                buildRow([f2, w2]),
-                buildRow([f3, w3]),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          TextButton(
-            onPressed: () {
-              for (int i = 1; i <= 3; i++) {
-                getfeed2(i.toString());
-              }
-              for (int i = 1; i <= 3; i++) {
-                getwash2(i.toString());
-              }
-            },
-            child: const Text(
-              "CAGE2",
-              style: TextStyle(fontSize: 40, color: Colors.white),
-            ),
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.blue,
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Table(
-              border: TableBorder.all(),
-              children: [
-                buildRow(['FEED', 'WASH']),
-                buildRow([f11, w11]),
-                buildRow([f22, w22]),
-                buildRow([f33, w33]),
-              ],
-            ),
-          ),
-        ]));
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 
-  TableRow buildRow(List<String> cells) => TableRow(
-      children: cells
-          .map((cell) => Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Center(
-                    child: Text(
-                  cell,
-                  style: const TextStyle(fontSize: 25),
-                )),
-              ))
-          .toList());
+  getData() async {
+    List<String> c1feedsched = [];
+    List<String> c2feedsched = [];
+    List<String> c1washsched = [];
+    List<String> c2washsched = [];
+    //getfeed1_time
+    var x = await FirebaseDatabase.instance
+        .ref("cage1_feed_sched")
+        .orderByKey()
+        .get();
+    var y = jsonDecode(jsonEncode(x.value)) as List<dynamic>;
+
+    for (int i = 0; i < y.length; i++) {
+      c1feedsched.add(y[i]);
+    }
+    print(c1feedsched);
+
+    //getfeed2_time
+    var a = await FirebaseDatabase.instance
+        .ref("cage2_feed_sched")
+        .orderByKey()
+        .get();
+    var b = jsonDecode(jsonEncode(a.value)) as List<dynamic>;
+
+    for (int i = 0; i < b.length; i++) {
+      c2feedsched.add(b[i]);
+    }
+    print(c2feedsched);
+
+    //getwash1_time
+    var c = await FirebaseDatabase.instance
+        .ref("cage1_wash_sched")
+        .orderByKey()
+        .get();
+    var d = jsonDecode(jsonEncode(c.value)) as List<dynamic>;
+
+    for (int i = 0; i < d.length; i++) {
+      c1washsched.add(d[i]);
+    }
+    print(c1washsched);
+
+    //getwash2_time
+    var e = await FirebaseDatabase.instance
+        .ref("cage2_wash_sched")
+        .orderByKey()
+        .get();
+    var f = jsonDecode(jsonEncode(e.value)) as List<dynamic>;
+
+    for (int i = 0; i < f.length; i++) {
+      c2washsched.add(f[i]);
+    }
+    print(c2washsched);
+    return [c1feedsched, c2feedsched, c1washsched, c2washsched];
+  }
 }
