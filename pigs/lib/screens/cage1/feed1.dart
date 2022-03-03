@@ -64,7 +64,7 @@ class _FeedState extends State<Feed> {
               style: TextStyle(fontSize: 35),
             ),
             onPressed: () {
-              feed(true);
+              feed("ON");
             },
             style: ElevatedButton.styleFrom(
                 primary: Colors.pink,
@@ -77,7 +77,7 @@ class _FeedState extends State<Feed> {
     );
   }
 
-  feed(bool x) {
+  feed(x) {
     DatabaseReference _testRef = FirebaseDatabase.instance.ref("/cage_1");
     _testRef.update({"feed_1": x});
   }
