@@ -9,7 +9,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final items = ['0.5 KG', '1 KG', '1.5 KG', '2 KG'];
+  final items = ['0.5 KG', '1 KG', '1.5 KG'];
   var temp;
   var temp2;
 
