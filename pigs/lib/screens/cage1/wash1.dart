@@ -63,5 +63,13 @@ class _Washing1State extends State<Washing1> {
     DatabaseReference _testRef =
         FirebaseDatabase.instance.ref("/cage_1").child("/wash_1");
     _testRef.set(x);
+
+    Future.delayed(Duration(milliseconds: 5000), () {
+      _testRef.set("OFF");
+      setState(() {
+        selected = false;
+        option = "OFF";
+      });
+    });
   }
 }
