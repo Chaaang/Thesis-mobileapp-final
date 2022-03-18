@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_database/firebase_database.dart';
@@ -12,111 +13,241 @@ class ViewSched extends StatefulWidget {
 }
 
 class _ViewSchedState extends State<ViewSched> {
+  List<String> c1_feedTime = ["", "", ""];
+  List<String> c1_washTime = ["", "", ""];
+  List<String> c2_feedTime = ["", "", ""];
+  List<String> c2_washTime = ["", "", ""];
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getData(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
-        } else if (snapshot.hasData) {
-          final data = snapshot.data as List<List<String>>;
-          return DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              appBar: AppBar(
-                title: const Text('Scheds'),
-                centerTitle: true,
-                bottom: const TabBar(
-                  tabs: [
-                    Tab(
-                      text: 'CAGE 1',
-                    ),
-                    Tab(
-                      text: 'CAGE 2',
-                    ),
-                  ],
-                ),
-              ),
-              body: TabBarView(children: [
-                Center(
-                    child: ListView(
-                  children: [
-                    const Center(child: Text("FEED")),
-                    TextButton(onPressed: () {}, child: Text(data[0][0])),
-                    TextButton(onPressed: () {}, child: Text(data[0][1])),
-                    TextButton(onPressed: () {}, child: Text(data[0][2])),
-                    const Center(child: Text("WASH")),
-                    TextButton(onPressed: () {}, child: Text(data[2][0])),
-                    TextButton(onPressed: () {}, child: Text(data[2][1])),
-                    TextButton(onPressed: () {}, child: Text(data[2][2])),
-                  ],
-                )),
-                Center(
-                  child: Text("CAGE 2"),
-                )
-              ]),
-            ),
-          );
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
-      },
-    );
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _feed1scheds();
+    _wash1scheds();
+    _feed2scheds();
+    _wash2scheds();
   }
 
-  getData() async {
-    List<String> c1feedsched = [];
-    List<String> c2feedsched = [];
-    List<String> c1washsched = [];
-    List<String> c2washsched = [];
-    //getfeed1_time
-    var x = await FirebaseDatabase.instance
+  void _feed1scheds() async {
+    final StreamSubscription<DatabaseEvent> _testRef = FirebaseDatabase.instance
         .ref("cage1_feed_sched")
-        .orderByKey()
-        .get();
-    var y = jsonDecode(jsonEncode(x.value)) as List<dynamic>;
+        .onValue
+        .listen((event) {
+      final List<dynamic> data = jsonDecode(jsonEncode(event.snapshot.value));
 
-    for (int i = 0; i < y.length; i++) {
-      c1feedsched.add(y[i]);
-    }
-    print(c1feedsched);
+      setState(() {
+        c1_feedTime[0] = data[0];
+        c1_feedTime[1] = data[1];
+        c1_feedTime[2] = data[2];
+      });
+    });
+  }
 
-    //getfeed2_time
-    var a = await FirebaseDatabase.instance
+  void _feed2scheds() async {
+    final StreamSubscription<DatabaseEvent> _testRef = FirebaseDatabase.instance
         .ref("cage2_feed_sched")
-        .orderByKey()
-        .get();
-    var b = jsonDecode(jsonEncode(a.value)) as List<dynamic>;
+        .onValue
+        .listen((event) {
+      final List<dynamic> data = jsonDecode(jsonEncode(event.snapshot.value));
 
-    for (int i = 0; i < b.length; i++) {
-      c2feedsched.add(b[i]);
-    }
-    print(c2feedsched);
+      setState(() {
+        c2_feedTime[0] = data[0];
+        c2_feedTime[1] = data[1];
+        c2_feedTime[2] = data[2];
+      });
+    });
+  }
 
-    //getwash1_time
-    var c = await FirebaseDatabase.instance
+  void _wash1scheds() async {
+    final StreamSubscription<DatabaseEvent> _testRef = FirebaseDatabase.instance
         .ref("cage1_wash_sched")
-        .orderByKey()
-        .get();
-    var d = jsonDecode(jsonEncode(c.value)) as List<dynamic>;
+        .onValue
+        .listen((event) {
+      final List<dynamic> data = jsonDecode(jsonEncode(event.snapshot.value));
 
-    for (int i = 0; i < d.length; i++) {
-      c1washsched.add(d[i]);
-    }
-    print(c1washsched);
+      setState(() {
+        c1_washTime[0] = data[0];
+        c1_washTime[1] = data[1];
+        c1_washTime[2] = data[2];
+      });
+    });
+  }
 
-    //getwash2_time
-    var e = await FirebaseDatabase.instance
+  void _wash2scheds() async {
+    final StreamSubscription<DatabaseEvent> _testRef = FirebaseDatabase.instance
         .ref("cage2_wash_sched")
-        .orderByKey()
-        .get();
-    var f = jsonDecode(jsonEncode(e.value)) as List<dynamic>;
+        .onValue
+        .listen((event) {
+      final List<dynamic> data = jsonDecode(jsonEncode(event.snapshot.value));
 
-    for (int i = 0; i < f.length; i++) {
-      c2washsched.add(f[i]);
-    }
-    print(c2washsched);
-    return [c1feedsched, c2feedsched, c1washsched, c2washsched];
+      setState(() {
+        c2_washTime[0] = data[0];
+        c2_washTime[1] = data[1];
+        c2_washTime[2] = data[2];
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Scheds'),
+          centerTitle: true,
+          bottom: const TabBar(
+            tabs: [
+              Tab(
+                text: 'CAGE 1',
+              ),
+              Tab(
+                text: 'CAGE 2',
+              ),
+            ],
+          ),
+        ),
+        body: TabBarView(children: [
+          Center(
+            child: DefaultTabController(
+                length: 2,
+                child: Container(
+                  padding: EdgeInsets.all(32.0),
+                  child: Scaffold(
+                    appBar: PreferredSize(
+                      preferredSize: Size.fromHeight(50.0),
+                      child: AppBar(
+                        automaticallyImplyLeading: false,
+                        bottom: const TabBar(tabs: [
+                          Tab(
+                            text: 'FEED',
+                          ),
+                          Tab(
+                            text: 'WASH',
+                          ),
+                        ]),
+                      ),
+                    ),
+                    body: TabBarView(children: [
+                      Center(
+                        child: Column(children: [
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Text(c1_feedTime[0]),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(c1_feedTime[1]),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(c1_feedTime[2]),
+                          SizedBox(
+                            height: 300,
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                DatabaseReference _testRef = FirebaseDatabase
+                                    .instance
+                                    .ref("/cage1_feed_sched");
+                                _testRef.update({"0": " "});
+                                _testRef.update({"1": " "});
+                                _testRef.update({"2": " "});
+                              },
+                              child: Text("RESET"))
+                        ]),
+                      ),
+                      Center(
+                        child: Column(children: [
+                          Text(c1_washTime[0]),
+                          Text(c1_washTime[1]),
+                          Text(c1_washTime[2]),
+                          ElevatedButton(
+                              onPressed: () {
+                                DatabaseReference _testRef = FirebaseDatabase
+                                    .instance
+                                    .ref("/cage1_wash_sched");
+                                _testRef.update({"0": " "});
+                                _testRef.update({"1": " "});
+                                _testRef.update({"2": " "});
+                              },
+                              child: Text("RESET"))
+                        ]),
+                      )
+                    ]),
+                  ),
+                )),
+          ),
+          Center(
+            child: DefaultTabController(
+                length: 2,
+                child: Container(
+                  padding: EdgeInsets.all(32.0),
+                  child: Scaffold(
+                    appBar: PreferredSize(
+                      preferredSize: Size.fromHeight(50.0),
+                      child: AppBar(
+                        automaticallyImplyLeading: false,
+                        bottom: const TabBar(tabs: [
+                          Tab(
+                            text: 'FEED',
+                          ),
+                          Tab(
+                            text: 'WASH',
+                          ),
+                        ]),
+                      ),
+                    ),
+                    body: TabBarView(children: [
+                      Center(
+                        child: Column(children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(c2_feedTime[0]),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(c2_feedTime[1]),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(c2_feedTime[2]),
+                          ElevatedButton(
+                              onPressed: () {
+                                DatabaseReference _testRef = FirebaseDatabase
+                                    .instance
+                                    .ref("/cage2_feed_sched");
+                                _testRef.update({"0": " "});
+                                _testRef.update({"1": " "});
+                                _testRef.update({"2": " "});
+                              },
+                              child: Text("RESET"))
+                        ]),
+                      ),
+                      Center(
+                        child: Column(children: [
+                          Text(c2_washTime[0]),
+                          Text(c2_washTime[1]),
+                          Text(c2_washTime[2]),
+                          ElevatedButton(
+                              onPressed: () {
+                                DatabaseReference _testRef = FirebaseDatabase
+                                    .instance
+                                    .ref("/cage2_wash_sched");
+                                _testRef.update({"0": " "});
+                                _testRef.update({"1": " "});
+                                _testRef.update({"2": " "});
+                              },
+                              child: Text("RESET"))
+                        ]),
+                      ),
+                    ]),
+                  ),
+                )),
+          )
+        ]),
+      ),
+    );
   }
 }
