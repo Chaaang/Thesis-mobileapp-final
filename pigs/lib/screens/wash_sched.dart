@@ -79,16 +79,9 @@ class _WashScheduleState extends State<WashSchedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text("WASH SCHEDULE"),
-          centerTitle: true,
-          actions: [
-            PopupMenuButton<int>(
-                onSelected: (item) => onSelected(context, item),
-                itemBuilder: (context) => [
-                      const PopupMenuItem<int>(
-                          value: 0, child: Text("View Sched")),
-                    ])
-          ]),
+        title: const Text("WASH SCHEDULE"),
+        centerTitle: true,
+      ),
       body: Center(
         child: Column(
           children: [
@@ -286,14 +279,5 @@ class _WashScheduleState extends State<WashSchedule> {
         builder: (BuildContext context) {
           return alertDialog;
         });
-  }
-
-  void onSelected(BuildContext context, int item) {
-    switch (item) {
-      case 0:
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ViewSched()));
-        break;
-    }
   }
 }

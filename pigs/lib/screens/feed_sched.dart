@@ -79,16 +79,9 @@ class _FeedScheduleState extends State<FeedSchedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text("FEED SCHEDULE"),
-          centerTitle: true,
-          actions: [
-            PopupMenuButton<int>(
-                onSelected: (item) => onSelected(context, item),
-                itemBuilder: (context) => [
-                      const PopupMenuItem<int>(
-                          value: 0, child: Text("View Sched")),
-                    ])
-          ]),
+        title: const Text("FEED SCHEDULE"),
+        centerTitle: true,
+      ),
       body: Center(
         child: Column(
           children: [
@@ -288,14 +281,5 @@ class _FeedScheduleState extends State<FeedSchedule> {
     DatabaseReference _testRef =
         FirebaseDatabase.instance.ref("/cage2_feed_sched");
     _testRef.update({cage2_id.toString(): cage2});
-  }
-
-  void onSelected(BuildContext context, int item) {
-    switch (item) {
-      case 0:
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ViewSched()));
-        break;
-    }
   }
 }
