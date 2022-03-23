@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:pigs/screens/feed_sched.dart';
+import 'package:pigs/screens/viewsched.dart';
 
 import 'package:pigs/screens/wash_sched.dart';
 
@@ -15,10 +16,15 @@ class _ScheduleState extends State<Schedule> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("SCHEDULE"),
-          centerTitle: true,
-        ),
+        appBar:
+            AppBar(title: const Text("SCHEDULE"), centerTitle: true, actions: [
+          PopupMenuButton<int>(
+              onSelected: (item) => onSelected(context, item),
+              itemBuilder: (context) => [
+                    const PopupMenuItem<int>(
+                        value: 0, child: Text("View Sched")),
+                  ])
+        ]),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -52,5 +58,14 @@ class _ScheduleState extends State<Schedule> {
             ],
           ),
         ));
+  }
+
+  void onSelected(BuildContext context, int item) {
+    switch (item) {
+      case 0:
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ViewSched()));
+        break;
+    }
   }
 }
