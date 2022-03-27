@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pigs/screens/viewsched.dart';
 
 class FeedSchedule extends StatefulWidget {
@@ -189,7 +190,12 @@ class _FeedScheduleState extends State<FeedSchedule> {
                       isCheck2 = false;
                     });
                   } else if (isCheck == false && isCheck2 == false) {
-                    empty(context);
+                    Fluttertoast.showToast(
+                        msg: "SELECT TIME AND CAGE",
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.BOTTOM,
+                        textColor: Colors.white,
+                        fontSize: 20.0);
                   }
 
                   if (cage1_id == 3 && cage2_id == 3) {

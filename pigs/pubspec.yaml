@@ -40,6 +40,7 @@ dependencies:
   percent_indicator: ^4.0.0
   firebase_messaging: ^11.2.11
   flutter_local_notifications: ^9.4.0
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:

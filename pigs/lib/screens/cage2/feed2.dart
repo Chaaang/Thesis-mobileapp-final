@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pigs/screens/settings.dart';
 
 class Feed2 extends StatefulWidget {
@@ -13,12 +14,14 @@ class Feed2 extends StatefulWidget {
 class _Feed2State extends State<Feed2> {
   final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
   String display = "Result";
+  int tank = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     activelistener();
+    getStatus();
   }
 
   void activelistener() {
@@ -31,6 +34,20 @@ class _Feed2State extends State<Feed2> {
 
       setState(() {
         display = '$description';
+      });
+    });
+  }
+
+  void getStatus() {
+    final StreamSubscription<DatabaseEvent> _testRef = FirebaseDatabase.instance
+        .ref()
+        .child("cage_2/feed_tank_2")
+        .onValue
+        .listen((event) {
+      final int data = jsonDecode(jsonEncode(event.snapshot.value));
+
+      setState(() {
+        tank = data;
       });
     });
   }
@@ -64,7 +81,22 @@ class _Feed2State extends State<Feed2> {
               style: TextStyle(fontSize: 35),
             ),
             onPressed: () {
-              feed("ON");
+              if (tank > 10) {
+                feed("ON");
+                Fluttertoast.showToast(
+                    msg: "DONE",
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    textColor: Colors.white,
+                    fontSize: 20.0);
+              } else {
+                Fluttertoast.showToast(
+                    msg: "Please refill the FEED TANK",
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    textColor: Colors.white,
+                    fontSize: 20.0);
+              }
             },
             style: ElevatedButton.styleFrom(
                 primary: Colors.pink,

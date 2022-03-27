@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -71,17 +72,37 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               onPressed: () {
                 if (temp == null && temp2 == null) {
-                  notset(context);
+                  Fluttertoast.showToast(
+                      msg: "Please SET atleast 1 cage",
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      textColor: Colors.white,
+                      fontSize: 20.0);
                 } else if (temp == null) {
                   weight2(temp2);
-                  allset(context);
+                  Fluttertoast.showToast(
+                      msg: "CAGE 2 SET",
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      textColor: Colors.white,
+                      fontSize: 20.0);
                 } else if (temp2 == null) {
                   weight(temp);
-                  allset(context);
+                  Fluttertoast.showToast(
+                      msg: "CAGE 1 SET",
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      textColor: Colors.white,
+                      fontSize: 20.0);
                 } else {
                   weight(temp);
                   weight2(temp2);
-                  allset(context);
+                  Fluttertoast.showToast(
+                      msg: "ALL CAGE SET",
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      textColor: Colors.white,
+                      fontSize: 20.0);
                 }
               },
               style: ElevatedButton.styleFrom(
@@ -111,27 +132,5 @@ class _SettingsPageState extends State<SettingsPage> {
   weight2(var dataweight) {
     DatabaseReference _testRef = FirebaseDatabase.instance.ref("/cage_2");
     _testRef.update({'weight_2': dataweight});
-  }
-
-  void allset(BuildContext context) {
-    var alertDialog = const AlertDialog(
-        title: Text("DONE"), content: Text("You may feed your pigs!"));
-
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alertDialog;
-        });
-  }
-
-  void notset(BuildContext context) {
-    var alertDialog = const AlertDialog(
-        title: Text("ALERT"), content: Text("Please SET atleast 1 cage"));
-
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alertDialog;
-        });
   }
 }
