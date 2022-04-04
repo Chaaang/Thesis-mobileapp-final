@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -25,7 +26,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'high_importance_channel', 'High Importance Notifications',
     description: 'This channel is used for important notifications.',
-    importance: Importance.high);
+    importance: Importance.max);
 
 //2
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -42,6 +43,13 @@ Future<void> main() async {
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
+  const initialzationSettingsAndroid =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+  const initializationSettings =
+      InitializationSettings(android: initialzationSettingsAndroid);
+
+  flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
   runApp(const MyApp());
 }
 
@@ -51,7 +59,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      //debugShowCheckedModeBanner: false,
       theme: ThemeData(brightness: Brightness.dark),
       home: const HomeScreen(
         title: 'Home',
@@ -107,6 +115,9 @@ class _HomeScreenState extends State<HomeScreen> {
     print("=====================");
     print(token);
     print("=====================");
+
+    final DatabaseReference _database = FirebaseDatabase.instance.ref();
+    _database.child('fcm-token/${token}').set({"token": token});
   }
 
   @override
