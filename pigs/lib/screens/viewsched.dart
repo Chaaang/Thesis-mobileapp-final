@@ -133,36 +133,137 @@ class _ViewSchedState extends State<ViewSched> {
                           SizedBox(
                             height: 50,
                           ),
-                          Text(c1_feedTime[0]),
-                          SizedBox(
+                          Container(
+                              width: 350.0,
+                              height: 50.0,
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.blueGrey),
+                              child: Text(
+                                c1_feedTime[0],
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                          const SizedBox(
                             height: 20,
                           ),
-                          Text(c1_feedTime[1]),
-                          SizedBox(
+                          Container(
+                              width: 350.0,
+                              height: 50.0,
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.blueGrey),
+                              child: Text(
+                                c1_feedTime[1],
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                          const SizedBox(
                             height: 20,
                           ),
-                          Text(c1_feedTime[2]),
-                          SizedBox(
+                          Container(
+                            width: 350.0,
+                            height: 50.0,
+                            padding: const EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.blueGrey),
+                            child: Text(
+                              c1_feedTime[2],
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          const SizedBox(
                             height: 300,
                           ),
                           ElevatedButton(
-                              onPressed: () {
-                                DatabaseReference _testRef = FirebaseDatabase
-                                    .instance
-                                    .ref("/cage1_feed_sched");
-                                _testRef.update({"0": " "});
-                                _testRef.update({"1": " "});
-                                _testRef.update({"2": " "});
-                              },
-                              child: Text("RESET"))
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.red,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50))),
+                            onPressed: () {
+                              DatabaseReference _testRef = FirebaseDatabase
+                                  .instance
+                                  .ref("/cage1_feed_sched");
+                              _testRef.update({"0": " "});
+                              _testRef.update({"1": " "});
+                              _testRef.update({"2": " "});
+                            },
+                            child: Text(
+                              "RESET",
+                            ),
+                          )
                         ]),
                       ),
                       Center(
                         child: Column(children: [
-                          Text(c1_washTime[0]),
-                          Text(c1_washTime[1]),
-                          Text(c1_washTime[2]),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Container(
+                            width: 350.0,
+                            height: 50.0,
+                            padding: const EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.blueGrey),
+                            child: Text(
+                              c1_washTime[0],
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                              width: 350.0,
+                              height: 50.0,
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.blueGrey),
+                              child: Text(
+                                c1_washTime[1],
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                              width: 350.0,
+                              height: 50.0,
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.blueGrey),
+                              child: Text(
+                                c1_washTime[2],
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                          SizedBox(
+                            height: 300,
+                          ),
                           ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.red,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50))),
                               onPressed: () {
                                 DatabaseReference _testRef = FirebaseDatabase
                                     .instance
@@ -178,6 +279,7 @@ class _ViewSchedState extends State<ViewSched> {
                   ),
                 )),
           ),
+          //CAGE2
           Center(
             child: DefaultTabController(
                 length: 2,
@@ -202,18 +304,64 @@ class _ViewSchedState extends State<ViewSched> {
                       Center(
                         child: Column(children: [
                           SizedBox(
-                            height: 20,
+                            height: 50,
                           ),
-                          Text(c2_feedTime[0]),
+                          Container(
+                              width: 350.0,
+                              height: 50.0,
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.blueGrey),
+                              child: Text(
+                                c2_feedTime[0],
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              )),
                           SizedBox(
                             height: 20,
                           ),
-                          Text(c2_feedTime[1]),
+                          Container(
+                              width: 350.0,
+                              height: 50.0,
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.blueGrey),
+                              child: Text(
+                                c2_feedTime[1],
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              )),
                           SizedBox(
                             height: 20,
                           ),
-                          Text(c2_feedTime[2]),
+                          Container(
+                              width: 350.0,
+                              height: 50.0,
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.blueGrey),
+                              child: Text(
+                                c2_feedTime[2],
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                          SizedBox(
+                            height: 300,
+                          ),
                           ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.red,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50))),
                               onPressed: () {
                                 DatabaseReference _testRef = FirebaseDatabase
                                     .instance
@@ -227,10 +375,65 @@ class _ViewSchedState extends State<ViewSched> {
                       ),
                       Center(
                         child: Column(children: [
-                          Text(c2_washTime[0]),
-                          Text(c2_washTime[1]),
-                          Text(c2_washTime[2]),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Container(
+                              width: 350.0,
+                              height: 50.0,
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.blueGrey),
+                              child: Text(
+                                c2_washTime[0],
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                              width: 350.0,
+                              height: 50.0,
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.blueGrey),
+                              child: Text(
+                                c2_washTime[1],
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                              width: 350.0,
+                              height: 50.0,
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.blueGrey),
+                              child: Text(
+                                c2_washTime[2],
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                          SizedBox(
+                            height: 300,
+                          ),
                           ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.red,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50))),
                               onPressed: () {
                                 DatabaseReference _testRef = FirebaseDatabase
                                     .instance
