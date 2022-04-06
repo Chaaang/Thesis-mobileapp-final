@@ -81,17 +81,17 @@ class _Feed2State extends State<Feed2> {
               style: TextStyle(fontSize: 35),
             ),
             onPressed: () {
-              if (tank > 10) {
-                feed("ON");
+              if (tank <= 10) {
                 Fluttertoast.showToast(
-                    msg: "DONE",
+                    msg: "Please refill the FEED TANK",
                     toastLength: Toast.LENGTH_LONG,
                     gravity: ToastGravity.BOTTOM,
                     textColor: Colors.white,
                     fontSize: 20.0);
               } else {
+                feed("ON");
                 Fluttertoast.showToast(
-                    msg: "Please refill the FEED TANK",
+                    msg: "DONE",
                     toastLength: Toast.LENGTH_LONG,
                     gravity: ToastGravity.BOTTOM,
                     textColor: Colors.white,
