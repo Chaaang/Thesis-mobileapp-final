@@ -55,60 +55,73 @@ class _tanks1State extends State<tanks1> {
     });
   }
 
+  Future refresh() async {
+    DatabaseReference _testRef = FirebaseDatabase.instance.ref('cage_1');
+    await _testRef.update({'refresh': 'ON'});
+    Future.delayed(Duration(milliseconds: 2000), () {
+      _testRef.update({'refresh': 'OFF'});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("TANKS"),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          const SizedBox(height: 50),
-          const Text(
-            "Water",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 50),
-          Center(
-            child: CircularPercentIndicator(
-              radius: 100,
-              lineWidth: 20,
-              percent: water_percent,
-              progressColor: Colors.blue,
-              backgroundColor: Colors.blue.shade100,
-              circularStrokeCap: CircularStrokeCap.round,
-              center: Text(
-                water_level.toString() + "%",
-                style: TextStyle(fontSize: 20),
-              ),
+        appBar: AppBar(
+          title: const Text("TANKS"),
+          centerTitle: true,
+        ),
+        body: RefreshIndicator(
+            child: ListView(
+              children: [
+                const SizedBox(height: 50),
+                Center(
+                  child: const Text(
+                    "Water",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(height: 50),
+                Center(
+                  child: CircularPercentIndicator(
+                    radius: 100,
+                    lineWidth: 20,
+                    percent: water_percent,
+                    progressColor: Colors.blue,
+                    backgroundColor: Colors.blue.shade100,
+                    circularStrokeCap: CircularStrokeCap.round,
+                    center: Text(
+                      water_level.toString() + "%",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 50),
+                Center(
+                  child: const Text(
+                    "Feed",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(height: 50),
+                Center(
+                  child: CircularPercentIndicator(
+                    radius: 100,
+                    lineWidth: 20,
+                    percent: feed_percent,
+                    progressColor: Colors.blue,
+                    backgroundColor: Colors.blue.shade100,
+                    circularStrokeCap: CircularStrokeCap.round,
+                    center: Text(
+                      feed_level.toString() + "%",
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+              ],
             ),
-          ),
-          const SizedBox(height: 50),
-          const Text(
-            "Feed",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 50),
-          Center(
-            child: CircularPercentIndicator(
-              radius: 100,
-              lineWidth: 20,
-              percent: feed_percent,
-              progressColor: Colors.blue,
-              backgroundColor: Colors.blue.shade100,
-              circularStrokeCap: CircularStrokeCap.round,
-              center: Text(
-                feed_level.toString() + "%",
-                style: const TextStyle(fontSize: 20),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-        ],
-      ),
-    );
+            onRefresh: refresh));
   }
 }
