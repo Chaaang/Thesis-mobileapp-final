@@ -40,7 +40,8 @@ class Cage2 extends StatelessWidget {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Washing2()));
                   },
-                  child: const Text('WASH', style: TextStyle(fontSize: 35)),
+                  child:
+                      const Text('SANITATION', style: TextStyle(fontSize: 35)),
                   style: ElevatedButton.styleFrom(
                       primary: Colors.pink,
                       fixedSize: const Size(300, 100),
