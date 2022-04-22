@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:pigs/firebase_options.dart';
+import 'package:pigs/screens/contactUs.dart';
 
 import 'package:pigs/screens/home.dart';
 import 'package:pigs/screens/settings.dart';
@@ -132,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context) => [
                     const PopupMenuItem<int>(value: 0, child: Text("Settings")),
                     const PopupMenuItem<int>(
-                        value: 2, child: Text("Contact Us")),
+                        value: 1, child: Text("Contact Us")),
                   ])
         ],
       ),
@@ -152,6 +153,9 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => SettingsPage()));
         break;
+      case 1:
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ContactUs()));
     }
   }
 }
