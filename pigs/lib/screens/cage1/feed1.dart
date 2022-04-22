@@ -63,8 +63,6 @@ class _FeedState extends State<Feed> {
               onSelected: (item) => onSelected(context, item),
               itemBuilder: (context) => [
                     const PopupMenuItem<int>(value: 0, child: Text("Settings")),
-                    const PopupMenuItem<int>(
-                        value: 1, child: Text("Contact Us"))
                   ])
         ],
       ),
@@ -72,12 +70,12 @@ class _FeedState extends State<Feed> {
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Text(
-            "WEIGHT: " + display,
-            style: const TextStyle(fontSize: 20),
+            display,
+            style: const TextStyle(fontSize: 70, fontWeight: FontWeight.bold),
           ),
           ElevatedButton(
             child: const Text(
-              "FEED ME",
+              "FEED",
               style: TextStyle(fontSize: 35),
             ),
             onPressed: () {
@@ -120,9 +118,6 @@ class _FeedState extends State<Feed> {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => SettingsPage()));
         break;
-      case 1:
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SettingsPage()));
     }
   }
 }
