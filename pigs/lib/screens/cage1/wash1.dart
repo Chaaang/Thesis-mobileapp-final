@@ -17,23 +17,37 @@ class _Washing1State extends State<Washing1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("WASHING"), centerTitle: true),
+      appBar: AppBar(title: const Text("SANITATION"), centerTitle: true),
       body: Center(
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          RotatedBox(
-            quarterTurns: 1,
-            child: buildSpecialAndroidSwitch(),
-          ),
-          SizedBox(height: 150),
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
           ElevatedButton(
-              onPressed: null,
-              child: Text(option),
-              style: ElevatedButton.styleFrom(
-                  primary: Colors.pink,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50)))),
+            child: const Text(
+              'WASH',
+              style: TextStyle(fontSize: 24),
+            ),
+            onPressed: () {
+              wash("ON");
+            },
+            style: ElevatedButton.styleFrom(
+              fixedSize: const Size(200, 200),
+              shape: const CircleBorder(),
+            ),
+          ),
+          ElevatedButton(
+            child: const Text(
+              'BATH',
+              style: TextStyle(fontSize: 24),
+            ),
+            onPressed: () {
+              bath("ON");
+            },
+            style: ElevatedButton.styleFrom(
+              fixedSize: const Size(200, 200),
+              shape: const CircleBorder(),
+            ),
+          )
         ],
       )),
     );
@@ -62,6 +76,20 @@ class _Washing1State extends State<Washing1> {
   wash(String x) {
     DatabaseReference _testRef =
         FirebaseDatabase.instance.ref("/cage_1").child("/wash_1");
+    _testRef.set(x);
+
+    Future.delayed(Duration(milliseconds: 5000), () {
+      _testRef.set("OFF");
+      setState(() {
+        selected = false;
+        option = "OFF";
+      });
+    });
+  }
+
+  bath(String x) {
+    DatabaseReference _testRef =
+        FirebaseDatabase.instance.ref("/cage_1").child("/bath_1");
     _testRef.set(x);
 
     Future.delayed(Duration(milliseconds: 5000), () {
