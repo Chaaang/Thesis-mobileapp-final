@@ -72,12 +72,12 @@ class _Feed2State extends State<Feed2> {
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Text(
-            "WEIGHT: " + display,
-            style: const TextStyle(fontSize: 20),
+            display,
+            style: const TextStyle(fontSize: 70, fontWeight: FontWeight.bold),
           ),
           ElevatedButton(
             child: const Text(
-              "FEED ME",
+              "FEED",
               style: TextStyle(fontSize: 35),
             ),
             onPressed: () {
