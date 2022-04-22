@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pigs/screens/bath_sched.dart';
 
 import 'package:pigs/screens/feed_sched.dart';
 import 'package:pigs/screens/viewsched.dart';
@@ -55,6 +56,19 @@ class _ScheduleState extends State<Schedule> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50))),
                   child: const Text("WASH", style: TextStyle(fontSize: 35))),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BathSchedule()));
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.pink,
+                      fixedSize: const Size(300, 100),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50))),
+                  child: const Text("BATH", style: TextStyle(fontSize: 35))),
             ],
           ),
         ));
