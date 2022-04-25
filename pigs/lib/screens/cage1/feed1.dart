@@ -79,7 +79,7 @@ class _FeedState extends State<Feed> {
               style: TextStyle(fontSize: 35),
             ),
             onPressed: () {
-              if (tank <= 10) {
+              if (tank <= 15) {
                 Fluttertoast.showToast(
                     msg: "Please refill the FEED TANK",
                     toastLength: Toast.LENGTH_LONG,
