@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -19,8 +20,22 @@ class _FeedScheduleState extends State<FeedSchedule> {
   int cage2_id = 0;
   List<String> cageTime1 = [];
   List<String> cageTime2 = [];
+  List<dynamic> cageWash1 = [];
+  List<dynamic> cageBath1 = [];
+  List<dynamic> cageWash2 = [];
+  List<dynamic> cageBath2 = [];
+
   int cage1_key = 0;
   int cage2_key = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _cageWash1();
+    _cageBath1();
+    _cageWash2();
+    _cageBath2();
+  }
 
   void time() {
     showTimePicker(context: context, initialTime: TimeOfDay.now())
@@ -39,6 +54,46 @@ class _FeedScheduleState extends State<FeedSchedule> {
         .then((event) {
       cageTime1.add(jsonDecode(jsonEncode(event.snapshot.value)));
       cageTime1.sort((a, b) => parseTime(a).compareTo(parseTime(b)));
+    });
+  }
+
+//WASH
+  void _cageWash1() {
+    final StreamSubscription<DatabaseEvent> _testRef = FirebaseDatabase.instance
+        .ref("cage1_wash_sched")
+        .onValue
+        .listen((event) {
+      cageWash1 = (jsonDecode(jsonEncode(event.snapshot.value)));
+    });
+  }
+
+//BATH
+  void _cageBath1() {
+    final StreamSubscription<DatabaseEvent> _testRef = FirebaseDatabase.instance
+        .ref("cage1_bath_sched")
+        .onValue
+        .listen((event) {
+      cageBath1 = (jsonDecode(jsonEncode(event.snapshot.value)));
+    });
+  }
+
+  //WASH2
+  void _cageWash2() {
+    final StreamSubscription<DatabaseEvent> _testRef = FirebaseDatabase.instance
+        .ref("cage2_wash_sched")
+        .onValue
+        .listen((event) {
+      cageWash2 = (jsonDecode(jsonEncode(event.snapshot.value)));
+    });
+  }
+
+//BATH2
+  void _cageBath2() {
+    final StreamSubscription<DatabaseEvent> _testRef = FirebaseDatabase.instance
+        .ref("cage2_bath_sched")
+        .onValue
+        .listen((event) {
+      cageBath2 = (jsonDecode(jsonEncode(event.snapshot.value)));
     });
   }
 
@@ -169,26 +224,105 @@ class _FeedScheduleState extends State<FeedSchedule> {
             ElevatedButton(
                 onPressed: () async {
                   if (isCheck == true && isCheck2 == true) {
-                    sched1(time_temp);
-                    sched2(time_temp);
-                    cage1_id++;
-                    cage2_id++;
-                    setState(() {
-                      isCheck = false;
-                      isCheck2 = false;
-                    });
+                    if ((cageWash1.contains(time_temp) ||
+                            cageBath1.contains(time_temp)) &&
+                        (cageWash2.contains(time_temp) ||
+                            cageBath2.contains(time_temp))) {
+                      Fluttertoast.showToast(
+                          msg: "TIME ALREADY SCHEDULED",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.BOTTOM,
+                          textColor: Colors.white,
+                          fontSize: 20.0);
+                    } else if (cageWash1.contains(time_temp) ||
+                        cageBath1.contains(time_temp)) {
+                      Fluttertoast.showToast(
+                          msg: "TIME ALREADY SCHEDULED",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.BOTTOM,
+                          textColor: Colors.white,
+                          fontSize: 20.0);
+                      sched2(time_temp);
+                      cage2_id++;
+                      setState(() {
+                        isCheck2 = false;
+                      });
+                    } else if (cageWash2.contains(time_temp) ||
+                        cageBath2.contains(time_temp)) {
+                      Fluttertoast.showToast(
+                          msg: "TIME ALREADY SCHEDULED",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.BOTTOM,
+                          textColor: Colors.white,
+                          fontSize: 20.0);
+                      sched1(time_temp);
+                      cage1_id++;
+                      setState(() {
+                        isCheck = false;
+                      });
+                    } else {
+                      sched2(time_temp);
+                      cage2_id++;
+                      sched1(time_temp);
+                      cage1_id++;
+                      setState(() {
+                        isCheck = false;
+                        isCheck2 = false;
+                      });
+                    }
+
+                    // sched1(time_temp);
+                    // sched2(time_temp);
+                    // cage1_id++;
+                    // cage2_id++;
+                    // setState(() {
+                    //   isCheck = false;
+                    //   isCheck2 = false;
+                    // });
                   } else if (isCheck == true && isCheck2 == false) {
-                    sched1(time_temp);
-                    cage1_id++;
-                    setState(() {
-                      isCheck = false;
-                    });
+                    if (cageWash1.contains(time_temp) ||
+                        cageBath1.contains(time_temp)) {
+                      Fluttertoast.showToast(
+                          msg: "TIME ALREADY SCHEDULED",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.BOTTOM,
+                          textColor: Colors.white,
+                          fontSize: 20.0);
+                    } else {
+                      sched1(time_temp);
+                      cage1_id++;
+                      setState(() {
+                        isCheck = false;
+                      });
+                    }
+
+                    // sched1(time_temp);
+                    // cage1_id++;
+                    // setState(() {
+                    //   isCheck = false;
+                    // });
                   } else if (isCheck == false && isCheck2 == true) {
-                    sched2(time_temp);
-                    cage2_id++;
-                    setState(() {
-                      isCheck2 = false;
-                    });
+                    if (cageWash2.contains(time_temp) ||
+                        cageBath2.contains(time_temp)) {
+                      Fluttertoast.showToast(
+                          msg: "TIME ALREADY SCHEDULED",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.BOTTOM,
+                          textColor: Colors.white,
+                          fontSize: 20.0);
+                    } else {
+                      sched2(time_temp);
+                      cage2_id++;
+                      setState(() {
+                        isCheck2 = false;
+                      });
+                    }
+
+                    // sched2(time_temp);
+                    // cage2_id++;
+                    // setState(() {
+                    //   isCheck2 = false;
+                    // });
                   } else if (isCheck == false && isCheck2 == false) {
                     Fluttertoast.showToast(
                         msg: "SELECT TIME AND CAGE",
