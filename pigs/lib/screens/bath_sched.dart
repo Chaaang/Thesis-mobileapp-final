@@ -229,13 +229,19 @@ class _BathScheduleState extends State<BathSchedule> {
                         (cageWash2.contains(time_temp) ||
                             cageFeed2.contains(time_temp))) {
                       Fluttertoast.showToast(
-                          msg: "TIME ALREADY SCHEDULED",
+                          msg: "FAILED TO SET BOTH CAGES",
                           toastLength: Toast.LENGTH_LONG,
                           gravity: ToastGravity.BOTTOM,
                           textColor: Colors.white,
                           fontSize: 20.0);
                     } else if (cageFeed1.contains(time_temp) ||
                         cageWash1.contains(time_temp)) {
+                      Fluttertoast.showToast(
+                          msg: "FAILED TO SET CAGE 1",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.BOTTOM,
+                          textColor: Colors.white,
+                          fontSize: 20.0);
                       sched2(time_temp);
                       cage2_id++;
                       setState(() {
@@ -243,6 +249,12 @@ class _BathScheduleState extends State<BathSchedule> {
                       });
                     } else if (cageWash2.contains(time_temp) ||
                         cageFeed2.contains(time_temp)) {
+                      Fluttertoast.showToast(
+                          msg: "FAILED TO SET CAGE 2",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.BOTTOM,
+                          textColor: Colors.white,
+                          fontSize: 20.0);
                       sched1(time_temp);
                       cage1_id++;
                       setState(() {
@@ -257,6 +269,12 @@ class _BathScheduleState extends State<BathSchedule> {
                         isCheck2 = false;
                         isCheck = false;
                       });
+                      Fluttertoast.showToast(
+                          msg: "DONE",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.BOTTOM,
+                          textColor: Colors.white,
+                          fontSize: 20.0);
                     }
 
                     // sched1(time_temp);

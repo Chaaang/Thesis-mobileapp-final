@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 //import 'package:flutter_switch/flutter_switch.dart';
 
 class Washing2 extends StatefulWidget {
@@ -29,6 +30,12 @@ class _Washing2State extends State<Washing2> {
             ),
             onPressed: () {
               wash("ON");
+              Fluttertoast.showToast(
+                  msg: "DONE",
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.BOTTOM,
+                  textColor: Colors.white,
+                  fontSize: 20.0);
             },
             style: ElevatedButton.styleFrom(
               fixedSize: const Size(200, 200),
@@ -42,6 +49,12 @@ class _Washing2State extends State<Washing2> {
             ),
             onPressed: () {
               bath("ON");
+              Fluttertoast.showToast(
+                  msg: "DONE",
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.BOTTOM,
+                  textColor: Colors.white,
+                  fontSize: 20.0);
             },
             style: ElevatedButton.styleFrom(
               fixedSize: const Size(200, 200),

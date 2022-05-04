@@ -225,7 +225,7 @@ class _WashScheduleState extends State<WashSchedule> {
                         (cageBath2.contains(time_temp) ||
                             cageFeed2.contains(time_temp))) {
                       Fluttertoast.showToast(
-                          msg: "TIME ALREADY SCHEDULED",
+                          msg: "FAILED TO SET BOTH CAGES",
                           toastLength: Toast.LENGTH_LONG,
                           gravity: ToastGravity.BOTTOM,
                           textColor: Colors.white,
@@ -233,7 +233,7 @@ class _WashScheduleState extends State<WashSchedule> {
                     } else if (cageBath1.contains(time_temp) ||
                         cageFeed1.contains(time_temp)) {
                       Fluttertoast.showToast(
-                          msg: "CAGE1 TIME ALREADY SCHEDULED",
+                          msg: "FAILED TO SET CAGE 1",
                           toastLength: Toast.LENGTH_LONG,
                           gravity: ToastGravity.BOTTOM,
                           textColor: Colors.white,
@@ -246,7 +246,7 @@ class _WashScheduleState extends State<WashSchedule> {
                     } else if ((cageBath2.contains(time_temp) ||
                         cageFeed2.contains(time_temp))) {
                       Fluttertoast.showToast(
-                          msg: "CAGE2 TIME ALREADY SCHEDULED",
+                          msg: "FAILED TO SET CAGE 2",
                           toastLength: Toast.LENGTH_LONG,
                           gravity: ToastGravity.BOTTOM,
                           textColor: Colors.white,
@@ -257,6 +257,12 @@ class _WashScheduleState extends State<WashSchedule> {
                         isCheck = false;
                       });
                     } else {
+                      Fluttertoast.showToast(
+                          msg: "DONE",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.BOTTOM,
+                          textColor: Colors.white,
+                          fontSize: 20.0);
                       sched1(time_temp);
                       cage1_id++;
                       sched2(time_temp);

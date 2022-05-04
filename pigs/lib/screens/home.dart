@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
-            margin: const EdgeInsets.all(45),
+            margin: const EdgeInsets.all(35),
             child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(context,
@@ -26,12 +26,12 @@ class Home extends StatelessWidget {
                 ),
                 style: ElevatedButton.styleFrom(
                     primary: Colors.pink,
-                    fixedSize: const Size(300, 100),
+                    fixedSize: const Size(100, 100),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)))),
           ),
           Container(
-            margin: const EdgeInsets.all(45),
+            margin: const EdgeInsets.all(35),
             child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(context,
@@ -40,12 +40,12 @@ class Home extends StatelessWidget {
                 child: const Text('CAGE 2', style: TextStyle(fontSize: 35)),
                 style: ElevatedButton.styleFrom(
                     primary: Colors.pink,
-                    fixedSize: const Size(300, 100),
+                    fixedSize: const Size(100, 100),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)))),
           ),
           Container(
-            margin: const EdgeInsets.all(45),
+            margin: const EdgeInsets.all(35),
             child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -56,7 +56,7 @@ class Home extends StatelessWidget {
                 child: const Text('Schedule', style: TextStyle(fontSize: 35)),
                 style: ElevatedButton.styleFrom(
                     primary: Colors.pink,
-                    fixedSize: const Size(300, 100),
+                    fixedSize: const Size(100, 100),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)))),
           ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:pigs/screens/cage2/feed2.dart';
+import 'package:pigs/screens/cage2/logs2.dart';
 import 'package:pigs/screens/cage2/tank2.dart';
-import 'package:pigs/screens/cage2/wash2.dart';
+import 'package:pigs/screens/cage2/sanitation1.dart';
 
 class Cage2 extends StatelessWidget {
   const Cage2({Key? key}) : super(key: key);
@@ -56,6 +57,20 @@ class Cage2 extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => tanks2()));
                   },
                   child: const Text('TANKS', style: TextStyle(fontSize: 35)),
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.pink,
+                      fixedSize: const Size(300, 100),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50)))),
+            ),
+            Container(
+              margin: const EdgeInsets.all(45),
+              child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => C2Logs()));
+                  },
+                  child: const Text('Logs', style: TextStyle(fontSize: 35)),
                   style: ElevatedButton.styleFrom(
                       primary: Colors.pink,
                       fixedSize: const Size(300, 100),

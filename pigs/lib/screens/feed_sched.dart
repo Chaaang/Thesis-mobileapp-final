@@ -229,7 +229,7 @@ class _FeedScheduleState extends State<FeedSchedule> {
                         (cageWash2.contains(time_temp) ||
                             cageBath2.contains(time_temp))) {
                       Fluttertoast.showToast(
-                          msg: "TIME ALREADY SCHEDULED",
+                          msg: "FAILED TO SET BOTH CAGES",
                           toastLength: Toast.LENGTH_LONG,
                           gravity: ToastGravity.BOTTOM,
                           textColor: Colors.white,
@@ -237,7 +237,7 @@ class _FeedScheduleState extends State<FeedSchedule> {
                     } else if (cageWash1.contains(time_temp) ||
                         cageBath1.contains(time_temp)) {
                       Fluttertoast.showToast(
-                          msg: "TIME ALREADY SCHEDULED",
+                          msg: "FAILED TO SET CAGE 1",
                           toastLength: Toast.LENGTH_LONG,
                           gravity: ToastGravity.BOTTOM,
                           textColor: Colors.white,
@@ -250,7 +250,7 @@ class _FeedScheduleState extends State<FeedSchedule> {
                     } else if (cageWash2.contains(time_temp) ||
                         cageBath2.contains(time_temp)) {
                       Fluttertoast.showToast(
-                          msg: "TIME ALREADY SCHEDULED",
+                          msg: "FAILED TO SET CAGE 2",
                           toastLength: Toast.LENGTH_LONG,
                           gravity: ToastGravity.BOTTOM,
                           textColor: Colors.white,
@@ -261,6 +261,12 @@ class _FeedScheduleState extends State<FeedSchedule> {
                         isCheck = false;
                       });
                     } else {
+                      Fluttertoast.showToast(
+                          msg: "DONE",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.BOTTOM,
+                          textColor: Colors.white,
+                          fontSize: 20.0);
                       sched2(time_temp);
                       cage2_id++;
                       sched1(time_temp);
